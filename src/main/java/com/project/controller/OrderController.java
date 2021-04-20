@@ -1,0 +1,60 @@
+package com.project.controller;
+
+import com.project.entity.Order;
+import com.project.services.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@CrossOrigin(origins = "http://pizzasite")
+@RestController
+public class OrderController {
+
+    @Autowired
+    private OrderService orderService;
+
+    @PostMapping("/orders")
+    public void create(@RequestBody Order order){
+        orderService.create(order);
+    }
+
+    @GetMapping("/orders")
+    public ResponseEntity<List<Order>> findAll(){
+        final List<Order> orderList = orderService.findAll();
+
+        if (orderList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(orderList, HttpStatus.OK);
+    }
+
+    @GetMapping("/orders/{id}")
+    public ResponseEntity<Optional<Order>> findById(@PathVariable(name = "id") Long id ) {
+        final Optional<Order> order = orderService.findById(id);
+
+        if (order.isPresent()) {
+            return new ResponseEntity<>(order, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping(value = "/orders/{id}")
+    public ResponseEntity<?> change(@RequestBody Order order, @PathVariable(name = "id") Long id) {
+        if (orderService.change(order, id)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping(value = "/orders/{id}")
+    public ResponseEntity<?> delete(@PathVariable(name = "id") Long id) {
+        if (orderService.delete(id)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+}
