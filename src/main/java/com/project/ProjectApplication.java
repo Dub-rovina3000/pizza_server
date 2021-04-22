@@ -18,7 +18,8 @@ public class ProjectApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("http://pizzasite")
+				registry.addMapping("/**").allowedOrigins("*")
+						.allowedMethods("POST", "GET", "PATCH", "PUT", "DELETE", "OPTIONS")
 				.allowedHeaders("name", "price", "time_for_cooking");
 			}
 		};

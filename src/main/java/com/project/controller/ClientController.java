@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://pizzasite")
+@CrossOrigin(origins = "*")
 @RestController
 public class ClientController {
 
@@ -18,8 +18,12 @@ public class ClientController {
     private ClientService clientService;
 
     @PostMapping("/clients")
-    public void create(@RequestBody Client client){
-        clientService.create(client);
+    public ResponseEntity<?> create(@RequestBody Client client){
+        Client savedClient = clientService.create(client);
+        if (savedClient == null) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/clients")
@@ -67,4 +71,6 @@ public class ClientController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    
 }

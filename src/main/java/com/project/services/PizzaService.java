@@ -22,8 +22,7 @@ public class PizzaService {
     }
 
     public List<Pizza> findAll(String sortBy){
-        return pizzaRepo.findAll(Sort.by(
-                Sort.Order.desc(sortBy)));
+        return pizzaRepo.findAll(Sort.by(Sort.Order.desc(sortBy)));
     }
 
     public Optional<Pizza> findById(Long id){

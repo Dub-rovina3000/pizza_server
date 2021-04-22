@@ -5,9 +5,11 @@ import com.project.repositories.ClientRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class ClientService {
@@ -15,8 +17,18 @@ public class ClientService {
     @Autowired
     private ClientRepo clientRepo;
 
-    public void create(Client client){
-        clientRepo.save(client);
+    public Client create(Client client){
+        if (clientRepo.findByEmailOrPhone(client.getEmail()) == null && clientRepo.findByEmailOrPhone(client.getPhoneNumber()) == null) {
+            try {
+                client.setPassword(getHashedPass(client.getPassword(), client.getSalt()));
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            clientRepo.save(client);
+            return clientRepo.findByEmailOrPhone(client.getEmail());
+        } else {
+            return null;
+        }
     }
 
     public List<Client> findAll(){
@@ -63,5 +75,20 @@ public class ClientService {
             return foundedClient;
         }
         return null;
+    }
+
+    private String getHashedPass(String pass, String salt) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        byte[] messageDigest = md.digest((pass + salt).getBytes());
+
+        BigInteger no = new BigInteger(1, messageDigest);
+
+        StringBuilder encoded = new StringBuilder(no.toString(16));
+
+        while (encoded.length() < 32) {
+            encoded.insert(0, "0");
+        }
+
+        return encoded.toString();
     }
 }

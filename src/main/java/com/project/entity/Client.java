@@ -28,6 +28,9 @@ public class Client {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String salt;
+
     public Long getId() {
         return id;
     }
@@ -76,4 +79,11 @@ public class Client {
         this.password = password;
     }
 
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 }
