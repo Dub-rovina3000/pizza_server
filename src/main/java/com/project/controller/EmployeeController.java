@@ -1,5 +1,7 @@
 package com.project.controller;
 
+import com.project.entity.AuthorizationClient;
+import com.project.entity.Client;
 import com.project.entity.Employee;
 import com.project.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +21,21 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @PostMapping("/employees")
-    public void create(@RequestBody Employee employee){
-        employeeService.create(employee);
+    public ResponseEntity<?> create(@RequestBody Employee employee) throws NoSuchAlgorithmException {
+        if (employeeService.create(employee)) {
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
+    }
+
+    @PostMapping("/authorization/emp")
+    public ResponseEntity<?> authorize(@RequestBody AuthorizationClient emp) throws NoSuchAlgorithmException {
+        Employee employee = employeeService.findByLogin(emp);
+
+        if (employee != null) {
+            return new ResponseEntity<>(employee, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/employees")

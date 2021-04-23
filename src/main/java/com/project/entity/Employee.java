@@ -21,6 +21,9 @@ public class Employee {
 
     private String lastName;
 
+    @Column(unique = true, nullable = false)
+    private String login;
+
     @Column(nullable = false)
     private boolean cookOrCourier;
 
@@ -33,9 +36,12 @@ public class Employee {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String salt;
+
     @ManyToOne
     @JoinColumn(name = "state_id", nullable = false)
-    private State state;
+    private State stateId;
 
     @JsonIgnore
     @ManyToMany
@@ -97,12 +103,12 @@ public class Employee {
         this.password = password;
     }
 
-    public State getState() {
-        return state;
+    public State getStateId() {
+        return stateId;
     }
 
-    public void setState(State state) {
-        this.state = state;
+    public void setStateId(State stateId) {
+        this.stateId = stateId;
     }
 
     public Set<Order> getOrderSet() {
@@ -111,5 +117,21 @@ public class Employee {
 
     public void setOrderSet(Set<Order> orderSet) {
         this.orderSet = orderSet;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }
