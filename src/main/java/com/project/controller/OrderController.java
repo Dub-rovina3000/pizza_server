@@ -18,8 +18,8 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/orders")
-    public void create(@RequestBody Order order){
-        orderService.create(order);
+    public Long create(@RequestBody Order order){
+        return orderService.create(order);
     }
 
     @GetMapping("/orders")
@@ -28,6 +28,16 @@ public class OrderController {
 
         if (orderList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(orderList, HttpStatus.OK);
+    }
+
+    @GetMapping("/orders/client/{id}")
+    public ResponseEntity<List<Order>> findByClientId(@PathVariable(name = "id") Long id) {
+        final List<Order> orderList = orderService.findByClientId(id);
+
+        if (orderList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity(orderList, HttpStatus.OK);
     }

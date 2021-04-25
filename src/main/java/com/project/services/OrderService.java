@@ -1,13 +1,18 @@
 package com.project.services;
 
-import com.project.entity.Ingredient;
 import com.project.entity.Order;
+import com.project.entity.Pizza;
 import com.project.repositories.OrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class OrderService {
@@ -15,12 +20,29 @@ public class OrderService {
     @Autowired
     private OrderRepo orderRepo;
 
-    public void create(Order order){
+    public Long create(Order order){
+        Set<Pizza> pizzaSet = new HashSet<>();
+        String bufString = order.getPizzaAmount();
+        while (bufString.contains("=")) {
+            Long id = Long.valueOf(bufString.substring(0, bufString.indexOf("=")));
+            Pizza pizza = new Pizza();
+            pizza.setId(id);
+            pizzaSet.add(pizza);
+            bufString = bufString.substring(bufString.indexOf(";")+1);
+        }
+        order.setPizzaSet(pizzaSet);
         orderRepo.save(order);
+
+        return order.getId();
     }
 
     public List<Order> findAll(){
         return orderRepo.findAll();
+    }
+
+    public List<Order> findByClientId(Long id) {
+        Pageable pageable = PageRequest.of(0, 20, Sort.by(Sort.Order.asc("order_time")));
+        return orderRepo.findByClientId(id, pageable);
     }
 
     public Optional<Order> findById(Long id){

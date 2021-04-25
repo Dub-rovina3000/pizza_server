@@ -2,9 +2,15 @@ package com.project.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.jca.support.LocalConnectionFactoryBean;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -18,8 +24,8 @@ public class Order {
     private Long id;
 
     @Column(nullable = false)
-    private Date orderTime;
-    private Date finishTime;
+    private LocalDateTime orderTime;
+    private LocalDateTime finishTime;
 
     @Column(nullable = false)
     private String address;
@@ -38,9 +44,16 @@ public class Order {
     @ManyToMany
     private Set<Pizza> pizzaSet;
 
-    @ManyToMany
-    private Set<Employee> employeeSet;
+    @Column(nullable = false)
+    private String pizzaAmount;
 
+    @ManyToOne
+    @JoinColumn(name = "cook_id")
+    private Employee cook;
+
+    @ManyToOne
+    @JoinColumn(name = "courier_id")
+    private Employee courier;
 
     public Long getId() {
         return id;
@@ -50,19 +63,19 @@ public class Order {
         this.id = id;
     }
 
-    public Date getOrderTime() {
+    public LocalDateTime getOrderTime() {
         return orderTime;
     }
 
-    public void setOrderTime(Date orderTime) {
+    public void setOrderTime(LocalDateTime orderTime) {
         this.orderTime = orderTime;
     }
 
-    public Date getFinishTime() {
+    public LocalDateTime getFinishTime() {
         return finishTime;
     }
 
-    public void setFinishTime(Date finishTime) {
+    public void setFinishTime(LocalDateTime finishTime) {
         this.finishTime = finishTime;
     }
 
@@ -72,6 +85,14 @@ public class Order {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Client getClient() {
@@ -90,6 +111,22 @@ public class Order {
         this.state = state;
     }
 
+    public Employee getCook() {
+        return cook;
+    }
+
+    public void setCook(Employee cook) {
+        this.cook = cook;
+    }
+
+    public Employee getCourier() {
+        return courier;
+    }
+
+    public void setCourier(Employee courier) {
+        this.courier = courier;
+    }
+
     public Set<Pizza> getPizzaSet() {
         return pizzaSet;
     }
@@ -98,11 +135,11 @@ public class Order {
         this.pizzaSet = pizzaSet;
     }
 
-    public Set<Employee> getEmployeeSet() {
-        return employeeSet;
+    public String getPizzaAmount() {
+        return pizzaAmount;
     }
 
-    public void setEmployeeSet(Set<Employee> employeeSet) {
-        this.employeeSet = employeeSet;
+    public void setPizzaAmount(String pizzaAmount) {
+        this.pizzaAmount = pizzaAmount;
     }
 }
