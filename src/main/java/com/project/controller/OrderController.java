@@ -42,6 +42,66 @@ public class OrderController {
         return new ResponseEntity(orderList, HttpStatus.OK);
     }
 
+    @GetMapping("/orders/cook")
+    public ResponseEntity<List<Order>> findAllWithoutCook() {
+        final List<Order> orderList = orderService.findOrderWithoutCook();
+
+        if (orderList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity(orderList, HttpStatus.OK);
+    }
+
+    @GetMapping("/orders/courier")
+    public ResponseEntity<List<Order>> findAllWithoutCourier() {
+        final List<Order> orderList = orderService.findOrderWithoutCourier();
+
+        if (orderList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity(orderList, HttpStatus.OK);
+    }
+
+    @GetMapping("/orders/cook/{id}")
+    public ResponseEntity<List<Order>> findOrderByCook(@PathVariable(name = "id") Long id) {
+        final List<Order> orderList = orderService.findByCook(id);
+
+        if (orderList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity(orderList, HttpStatus.OK);
+    }
+
+    @GetMapping("/orders/courier/{id}")
+    public ResponseEntity<List<Order>> findOrderByCourier(@PathVariable(name = "id") Long id) {
+        final List<Order> orderList = orderService.findByCourier(id);
+
+        if (orderList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity(orderList, HttpStatus.OK);
+    }
+
+    @GetMapping("/orders/cook/work/{id}")
+    public ResponseEntity<List<Order>> findWorkOrderByCook(@PathVariable(name = "id") Long id) {
+        final List<Order> orderList = orderService.findWorkByCook(id);
+
+        if (orderList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity(orderList, HttpStatus.OK);
+    }
+
+    @GetMapping("/orders/courier/work/{id}")
+    public ResponseEntity<List<Order>> findWorkOrderByCourier(@PathVariable(name = "id") Long id) {
+        final List<Order> orderList = orderService.findWorkByCourier(id);
+
+        if (orderList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity(orderList, HttpStatus.OK);
+    }
+
     @GetMapping("/orders/{id}")
     public ResponseEntity<Optional<Order>> findById(@PathVariable(name = "id") Long id ) {
         final Optional<Order> order = orderService.findById(id);
@@ -67,4 +127,6 @@ public class OrderController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+
 }

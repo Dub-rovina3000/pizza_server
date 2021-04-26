@@ -65,4 +65,34 @@ public class OrderService {
         }
         return false;
     }
+
+    public List<Order> findOrderWithoutCook() {
+        Pageable pageable = PageRequest.of(0, 20, Sort.by(Sort.Order.asc("order_time")));
+        return orderRepo.findAllOrdersWithoutCook(pageable);
+    }
+
+    public List<Order> findOrderWithoutCourier() {
+        Pageable pageable = PageRequest.of(0, 20, Sort.by(Sort.Order.asc("order_time")));
+        return orderRepo.findAllOrdersWithoutCourier(pageable);
+    }
+
+    public List<Order> findByCook(Long id) {
+        Pageable pageable = PageRequest.of(0, 20, Sort.by(Sort.Order.asc("order_time")));
+        return orderRepo.findByCookId(id, pageable);
+    }
+
+    public List<Order> findByCourier(Long id) {
+        Pageable pageable = PageRequest.of(0, 20, Sort.by(Sort.Order.asc("order_time")));
+        return orderRepo.findByCourier(id, pageable);
+    }
+
+    public List<Order> findWorkByCook(Long id) {
+        Pageable pageable = PageRequest.of(0, 20, Sort.by(Sort.Order.asc("order_time")));
+        return orderRepo.findWorkByCookId(id, pageable);
+    }
+
+    public List<Order> findWorkByCourier(Long id) {
+        Pageable pageable = PageRequest.of(0, 20, Sort.by(Sort.Order.asc("order_time")));
+        return orderRepo.findWorkByCourier(id, pageable);
+    }
 }

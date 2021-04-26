@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -27,8 +28,8 @@ public class Pizza {
     @ManyToMany
     private Set<Order> orderSet;
 
-    @ManyToMany
-    private Set<Ingredient> ingredientSet;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Ingredient> ingredientSet = new HashSet<>();
 
     @ManyToMany
     private Set<Category> categorySet;
