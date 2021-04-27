@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.entity.AuthorizationClient;
 import com.project.entity.Client;
 import com.project.entity.Employee;
@@ -58,9 +59,9 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping(value = "/employees/{id}")
-    public ResponseEntity<?> change(@RequestBody Employee employee, @PathVariable(name = "id") Long id) {
-        if (employeeService.change(employee, id)) {
+    @PutMapping(value = "/employees")
+    public ResponseEntity<?> change(@RequestBody String jsonString) throws JsonProcessingException, NoSuchAlgorithmException {
+        if (employeeService.change(jsonString)) {
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

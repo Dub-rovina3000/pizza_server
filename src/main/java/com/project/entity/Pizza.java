@@ -28,7 +28,7 @@ public class Pizza {
     @ManyToMany
     private Set<Order> orderSet;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.MERGE})
     private Set<Ingredient> ingredientSet = new HashSet<>();
 
     @ManyToMany

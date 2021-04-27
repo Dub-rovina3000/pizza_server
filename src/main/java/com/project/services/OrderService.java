@@ -1,5 +1,6 @@
 package com.project.services;
 
+import com.project.entity.Employee;
 import com.project.entity.Order;
 import com.project.entity.Pizza;
 import com.project.repositories.OrderRepo;

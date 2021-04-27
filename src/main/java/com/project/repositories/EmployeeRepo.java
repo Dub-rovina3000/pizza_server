@@ -10,4 +10,10 @@ public interface EmployeeRepo extends JpaRepository<Employee, Long> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM employee WHERE login = :login")
     Employee findByLogin(@Param("login") String login);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM employee WHERE id = :id")
+    Employee findByMyId(@Param("id") Long id);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM employee WHERE email = :search OR phone_number = :search")
+    Employee findByEmailOrPhone(@Param("search") String search);
 }
