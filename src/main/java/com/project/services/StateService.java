@@ -14,8 +14,8 @@ public class StateService {
     @Autowired
     private StateRepo stateRepo;
 
-    public void create(State state){
-        stateRepo.save(state);
+    public State create(State state){
+        return stateRepo.save(state);
     }
 
     public List<State> findAll(){

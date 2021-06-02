@@ -17,8 +17,8 @@ public class PizzaService {
     @Autowired
     private PizzaRepo pizzaRepo;
 
-    public void create(Pizza pizza){
-        pizzaRepo.save(pizza);
+    public Pizza create(Pizza pizza){
+        return pizzaRepo.save(pizza);
     }
 
     public List<Pizza> findAll(String sortBy){
@@ -48,7 +48,7 @@ public class PizzaService {
 
     public List<Pizza> findByCategory(String categories, String sortBy) {
         String[] categoryList = categories.split(",");
-        Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Order.desc(sortBy)));
+        Pageable pageable = PageRequest.of(0, 20, Sort.by(Sort.Order.desc(sortBy)));
         List<Pizza> pizzas = pizzaRepo.findAllByOrderByNameAsc(categoryList, pageable);
         return pizzas;
     }

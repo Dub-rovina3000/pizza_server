@@ -15,13 +15,13 @@ public interface OrderRepo extends JpaRepository<Order, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM orders WHERE client_id = :id")
     List<Order> findByClientId(@Param("id") Long id, Pageable pageable);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM orders WHERE status = 4")
+    @Query(nativeQuery = true, value = "SELECT * FROM orders WHERE status = 5")
     List<Order> findAllOrdersWithoutCook(Pageable pageable);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM orders WHERE cook_id = :id and status < 3")
+    @Query(nativeQuery = true, value = "SELECT * FROM orders WHERE cook_id = :id and status < 4")
     List<Order> findByCookId(@Param("id") Long id, Pageable pageable);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM orders WHERE status = 3 and courier = null")
+    @Query(nativeQuery = true, value = "SELECT * FROM orders WHERE status = 3 and courier_id IS NULL")
     List<Order> findAllOrdersWithoutCourier(Pageable pageable);
 
     @Query(nativeQuery = true, value = "SELECT * FROM orders WHERE courier_id = :id and status < 2")
@@ -30,6 +30,6 @@ public interface OrderRepo extends JpaRepository<Order, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM orders WHERE courier_id = :id and status = 2")
     List<Order> findWorkByCourier(@Param("id") Long id, Pageable pageable);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM orders WHERE cook_id = :id and status = 3")
+    @Query(nativeQuery = true, value = "SELECT * FROM orders WHERE cook_id = :id and status = 4")
     List<Order> findWorkByCookId(@Param("id") Long id, Pageable pageable);
 }

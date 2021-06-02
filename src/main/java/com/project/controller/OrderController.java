@@ -29,7 +29,7 @@ public class OrderController {
         if (orderList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity(orderList, HttpStatus.OK);
+        return new ResponseEntity<>(orderList, HttpStatus.OK);
     }
 
     @GetMapping("/orders/client/{id}")
@@ -39,7 +39,7 @@ public class OrderController {
         if (orderList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity(orderList, HttpStatus.OK);
+        return new ResponseEntity<>(orderList, HttpStatus.OK);
     }
 
     @GetMapping("/orders/cook")
@@ -49,7 +49,7 @@ public class OrderController {
         if (orderList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity(orderList, HttpStatus.OK);
+        return new ResponseEntity<>(orderList, HttpStatus.OK);
     }
 
     @GetMapping("/orders/courier")
@@ -59,7 +59,7 @@ public class OrderController {
         if (orderList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity(orderList, HttpStatus.OK);
+        return new ResponseEntity<>(orderList, HttpStatus.OK);
     }
 
     @GetMapping("/orders/cook/{id}")
@@ -69,7 +69,7 @@ public class OrderController {
         if (orderList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity(orderList, HttpStatus.OK);
+        return new ResponseEntity<>(orderList, HttpStatus.OK);
     }
 
     @GetMapping("/orders/courier/{id}")
@@ -79,7 +79,7 @@ public class OrderController {
         if (orderList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity(orderList, HttpStatus.OK);
+        return new ResponseEntity<>(orderList, HttpStatus.OK);
     }
 
     @GetMapping("/orders/cook/work/{id}")
@@ -89,7 +89,7 @@ public class OrderController {
         if (orderList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity(orderList, HttpStatus.OK);
+        return new ResponseEntity<>(orderList, HttpStatus.OK);
     }
 
     @GetMapping("/orders/courier/work/{id}")
@@ -99,7 +99,7 @@ public class OrderController {
         if (orderList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity(orderList, HttpStatus.OK);
+        return new ResponseEntity<>(orderList, HttpStatus.OK);
     }
 
     @GetMapping("/orders/{id}")

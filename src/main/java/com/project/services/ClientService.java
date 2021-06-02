@@ -25,8 +25,7 @@ public class ClientService {
     public Client create(Client client) throws NoSuchAlgorithmException {
         if (clientRepo.findByEmailOrPhone(client.getEmail()) == null && clientRepo.findByEmailOrPhone(client.getPhoneNumber()) == null) {
             client.setPassword(getHashedPass(client.getPassword(), client.getSalt()));
-            clientRepo.save(client);
-            Client newClient = clientRepo.findByEmailOrPhone(client.getPhoneNumber());
+            Client newClient = clientRepo.save(client);
             newClient.setPassword(null);
             newClient.setSalt(null);
             return newClient;

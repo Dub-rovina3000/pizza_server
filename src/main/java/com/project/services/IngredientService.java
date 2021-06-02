@@ -14,8 +14,8 @@ public class IngredientService {
     @Autowired
     private IngredientRepo ingredientRepo;
 
-    public void create(Ingredient ingredient){
-        ingredientRepo.save(ingredient);
+    public Ingredient create(Ingredient ingredient){
+        return ingredientRepo.save(ingredient);
     }
 
     public List<Ingredient> findAll(){
